@@ -25,7 +25,7 @@ flags.DEFINE_string('image_dir', '', 'Path to images')
 flags.DEFINE_string('label_dir', '', 'Path to labelmap')
 FLAGS = flags.FLAGS
 
-label_map = label_map_util.load_labelmap(FLAGS.labels_path)
+label_map = label_map_util.load_labelmap(FLAGS.label_dir)
 label_map_dict = label_map_util.get_label_map_dict(label_map)
 
 ''' 
