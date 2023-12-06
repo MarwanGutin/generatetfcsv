@@ -15,7 +15,7 @@ else:
     import tensorflow as tf
 
 from PIL import Image
-from object_detection.utils import dataset_util
+from object_detection.utils import dataset_util, label_map_util
 from collections import namedtuple, OrderedDict
 
 flags = tf.app.flags
@@ -25,6 +25,8 @@ flags.DEFINE_string('image_dir', '', 'Path to images')
 flags.DEFINE_string('label_dir', '', 'Path to labelmap')
 FLAGS = flags.FLAGS
 
+label_map = label_map_util.load_labelmap(FLAGS.labels_path)
+label_map_dict = label_map_util.get_label_map_dict(label_map)
 
 ''' 
 *************************************************************************
@@ -32,18 +34,19 @@ Make sure to edit this method to match the labels you made with labelImg!
 *************************************************************************
 '''
 def class_text_to_int(row_label):
-    if row_label == 'Airplane':
-        return 1
-    elif row_label == 'Helicopter':
-        return 2
-    elif row_label == 'Person':
-        return 3
-    elif row_label == 'Tank':
-        return 4
-    elif row_label == 'Vehicle':
-        return 5
-    else:
-        return None
+    return label_map_dict[row_label]
+    #if row_label == 'Airplane':
+    #    return 1
+    #elif row_label == 'Helicopter':
+    #    return 2
+    #elif row_label == 'Person':
+    #    return 3
+    #elif row_label == 'Tank':
+    #    return 4
+    #elif row_label == 'Vehicle':
+    #    return 5
+    #else:
+    #    return None
 
 
 def split(df, group):
